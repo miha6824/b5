@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-const Stack = createStackNavigator();
+// Khai báo các thành phần điều hướng
 const Tab = createBottomTabNavigator();
 
 function HomeScreen({ navigation }) {
@@ -88,7 +87,6 @@ function HomeScreen({ navigation }) {
           />
         </View>
       </View>
-
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate('Scan')} style={styles.iconButton}>
           <Image 
@@ -102,7 +100,7 @@ function HomeScreen({ navigation }) {
             style={styles.iconImage}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => { /* Handle Notifications button press */ }} style={styles.iconButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('Scan')} style={styles.iconButton}>
           <Image 
             source={{ uri: 'https://cdn.glitch.global/928b06a7-4328-45ff-8bfb-01b7dda43082/Vector%20(1).png?v=1720003313019' }} 
             style={styles.iconImage}
@@ -128,29 +126,36 @@ function HomeScreen({ navigation }) {
 function ScanScreen({ navigation }) {
   return (
     <View style={styles.container}>
+      <Image
+        source={{ uri: 'https://cdn.glitch.global/abb21aa0-52f3-466d-ba75-caea4bc02135/glass-bottle-mockups-for-food-and-beverage-packaging-cover%201.png?v=1720095989661' }}
+        style={styles.fullScreenImage}
+      />
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Image
           source={{ uri: 'https://cdn.glitch.global/928b06a7-4328-45ff-8bfb-01b7dda43082/Arrow%201.png?v=1720010790921' }}
           style={styles.backButtonImage}
         />
       </TouchableOpacity>
-      <Text style={styles.scanText}>Scan Screen</Text>
+      <View style={styles.bottomContainer}>
+        <Image
+          source={{ uri: 'https://cdn.glitch.global/abb21aa0-52f3-466d-ba75-caea4bc02135/Group%204.png?v=1720095994688' }}
+          style={styles.bottomImage}
+        />
+      </View>
     </View>
   );
 }
 
-function App() {
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Scan" component={ScanScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </GestureHandlerRootView>
-  );
-}
+const App = () => (
+  <GestureHandlerRootView style={{ flex: 1 }}>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Scan" component={ScanScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  </GestureHandlerRootView>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -208,11 +213,14 @@ const styles = StyleSheet.create({
   },
   footer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
   },
   iconButton: {
-    padding: 8,
+    flex: 1,
+    alignItems: 'center',
   },
   iconImage: {
     width: 24,
@@ -220,17 +228,29 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 16,
-    left: 16,
+    top: 40,
+    left: 20,
   },
   backButtonImage: {
-    width: 24,
-    height: 24,
+    width: 30,
+    height: 30,
   },
-  scanText: {
-    marginTop: 100,
-    textAlign: 'center',
-    fontSize: 24,
+  bottomContainer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    alignItems: 'center',
+  },
+  bottomImage: {
+    width: '100%',
+    height: 150,
+    resizeMode: 'contain',
+  },
+  fullScreenImage: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });
 
